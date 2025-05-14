@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dn3ykrwb0oe1b"]
+
+[ext_resource type="Script" uid="uid://55cjsp55314t" path="res://scripts/game_creator.gd" id="1_a0lj3"]
+[ext_resource type="Texture2D" uid="uid://bgaeipdhpak78" path="res://icon.svg" id="2_o67xn"]
+
+[node name="GameCreator" type="Node2D"]
+script = ExtResource("1_a0lj3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_o67xn")
