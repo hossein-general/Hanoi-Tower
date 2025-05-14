@@ -2,6 +2,7 @@ extends Node2D
 
 
 var rod_scene = preload("res://scenes/rod.tscn")
+var ring_scene = preload("res://scenes/ring.tscn")
 
 # Constants
 const min_ring_len: int = 74
@@ -9,24 +10,44 @@ const ring_len_dif: int = 16
 const view_len: int = 576
 const table_y_pos: int = 264
 
-var main_rod_generated: bool = false
+var main_rod_generated: bool = false	# main rod contains rings
 
 
-func _on_game_creator_rod_ring_count(rod_count:int, ring_count:int) -> void:
-	pass # Replace with function body.
-
-	var rod_x_poses: Array[int] = calc_x_pos(ring_count, rod_count)
+# Getting the number of Rods and Rings from the Game Creator menue (which is not implemented yet)
+func _on_game_creator_rod_ring_count(rod_count:int, ring_count:int) -> void:	#maximum ring count and the number of rods avalable
+	var rod_x_poses: Array[int] = calc_x_pos(ring_count, rod_count)		#calculate appropriate rod positions
 
 	for x_pos in rod_x_poses:
-		create_rod(x_pos, ring_count)
+		create_rod(x_pos, ring_count)	#creating each rod in each position
 
 
+# Creating rods, instantiating, and adding as a child to RodPoses scene
 func create_rod(pos, ring_count):
-	print("rod_created")
 	var rod = rod_scene.instantiate()
-	rod.position = Vector2(pos, table_y_pos)
-	rod.ring_count = ring_count
-	$RodPoses.add_child(rod)
+	
+	# if its the first rod generated, the level will generate all rings for it to hold
+	if not main_rod_generated:
+		var rings: Array = create_rings(ring_count)
+		rod.ring_stack = rings
+		main_rod_generated = true
+	
+	rod.position = Vector2(pos, table_y_pos)	# setting position
+	rod.max_ring_count = ring_count			# setting maximum ring count avalable in game
+	$RodPoses.add_child(rod)		# adding rods as childs of the RodPoses node (for further organization)
+
+
+# Creating rods, instantiating, and adding as a child to RodPoses scene
+func create_rings(ring_count):
+	var rings_created: Array = []
+	
+	for size in range(ring_count, 0, -1):
+		print("ring_created")
+		var ring = ring_scene.instantiate()
+		ring.set_size(size)
+		$Rings.add_child(ring)
+		rings_created.push_back(ring)
+	
+	return rings_created
 
 
 # calculating the x positions in which the rods should be spawned
@@ -34,14 +55,14 @@ func calc_x_pos(ring_count, rod_count):
 	var node_len = min_ring_len + ring_len_dif * ring_count
 	var total_len = node_len * rod_count
 	
-	if total_len > view_len:
-		print("UN SUPPORTED NUMBER OF RODS/RINGS (OUT OF VIEW)")
-		
-	var margin: int = (view_len - total_len) / 2
-	var rod_x_poses: Array[int]
+	if total_len > view_len:		# if the number of rods or the length of each resaulted by ring count exited camera frame
+		print("UN SUPPORTED NUMBER OF RODS/RINGS (OUT OF VIEW)")	# no exception raised
 	
-	rod_x_poses.push_back(margin + node_len/2)
-	for i in range(1, rod_count):
-		rod_x_poses.push_back(margin + node_len/2 + i * node_len)
+	var margin: int = (view_len - total_len) / 2
+	var rod_x_poses: Array[int]		# an array containing rod x-poses
+	
+	rod_x_poses.push_back(margin + node_len/2)		# the first rods x-pos should be calculated seperately 
+	for i in range(1, rod_count):		# calculating other rods positions and storing them
+		rod_x_poses.push_back(margin + node_len/2 + i * node_len)	# appending each new value
 
 	return rod_x_poses

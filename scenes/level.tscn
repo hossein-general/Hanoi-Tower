@@ -7,16 +7,18 @@
 [node name="Level" type="Node2D"]
 script = ExtResource("1_w8frs")
 
+[node name="GameCreator" parent="." instance=ExtResource("1_2q6dc")]
+position = Vector2(456, 56)
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(288, 160)
 zoom = Vector2(2, 2)
-
-[node name="GameCreator" parent="." instance=ExtResource("1_2q6dc")]
-position = Vector2(456, 56)
 
 [node name="Table" parent="." instance=ExtResource("3_mx8sn")]
 position = Vector2(288, 264)
 
 [node name="RodPoses" type="Node2D" parent="."]
+
+[node name="Rings" type="Node2D" parent="."]
 
 [connection signal="rod_ring_count" from="GameCreator" to="." method="_on_game_creator_rod_ring_count"]
