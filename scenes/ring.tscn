@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://dbg64ndp1o7dg"]
+[gd_scene load_steps=3 format=3 uid="uid://dbg64ndp1o7dg"]
 
 [ext_resource type="Script" uid="uid://beuxnq04wwvwj" path="res://scripts/ring.gd" id="1_03kdj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_03kdj"]
+size = Vector2(52, 20)
 
 [node name="Ring" type="Node2D"]
 script = ExtResource("1_03kdj")
@@ -9,3 +12,11 @@ script = ExtResource("1_03kdj")
 texture_repeat = 2
 scale = Vector2(0.5, 0.5)
 polygon = PackedVector2Array(-48, -16, -48, 16, 48, 16, 48, -16)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_03kdj")
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
