@@ -7,10 +7,12 @@ const rod_ring_height: int = 32
 signal click(rod)	# passing "self"
 
 # ring managementa
+var rod_hight = 32
 var ring_stack: Array = []		# the stack wich holds the rings
 var ring_count: int				# number of the rings contained within this rod
 var max_ring_count: int			# number of rings within the game
 var ring_pos_map: Dictionary	# a map dictionary which shoes logically appropriate position for each level of rings
+var top_of_rod: int
 
 # for handling mouse input
 var mouse_in: bool = false
@@ -27,6 +29,10 @@ func _ready() -> void:
 	for num in range(max_ring_count):
 		ring_pos_map[num] = Vector2(global_position.x, global_position.y - num * rod_ring_height - (rod_ring_height/2))
 		
+	top_of_rod = position.y - rod_hight * max_ring_count
+	print(position.y)
+	print(rod_hight*max_ring_count)
+	print(top_of_rod)
 	update_ring_count()
 	init_rings()
 
@@ -59,7 +65,8 @@ func add_ring(new_ring) -> bool:
 	ring_stack.push_back(new_ring)	# add the new ring to the stack
 	new_ring.external_click.connect(_on_ring_external_click)
 	update_ring_count()				# updating number of rings
-	new_ring.instant_update_pos(ring_pos_map[ring_count - 1])	# moving the new ring to correct position
+	#new_ring.instant_update_pos(ring_pos_map[ring_count - 1])	# moving the new ring to correct position
+	new_ring.move_in_arc(ring_pos_map[ring_count - 1], top_of_rod)	# moving the new ring to correct position
 	return true		# process successful
 
 
