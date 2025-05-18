@@ -46,7 +46,6 @@ func create_rings(ring_count):
 	var rings_created: Array = []	# the created rings
 	
 	for size in range(ring_count, 0, -1):
-		print("ring_created")
 		var ring = ring_scene.instantiate()
 		ring.set_size(size)
 		$Rings.add_child(ring)

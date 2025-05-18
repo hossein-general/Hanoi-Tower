@@ -30,9 +30,6 @@ func _ready() -> void:
 		ring_pos_map[num] = Vector2(global_position.x, global_position.y - num * rod_ring_height - (rod_ring_height/2))
 		
 	top_of_rod = position.y - rod_hight * max_ring_count
-	print(position.y)
-	print(rod_hight*max_ring_count)
-	print(top_of_rod)
 	update_ring_count()
 	init_rings()
 
@@ -40,7 +37,6 @@ func _ready() -> void:
 func  _process(_delta: float) -> void:
 	click_done = false
 	if Input.is_action_just_pressed("Click") and mouse_in and (not click_done):		# handling clicks (the click_done part is for multithreat)
-		print("-----------------")
 		click.emit(self)
 		click_done = true
 

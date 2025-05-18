@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bv2bfaqay7cd2"]
+[gd_scene load_steps=3 format=3 uid="uid://bv2bfaqay7cd2"]
 
 [ext_resource type="PackedScene" uid="uid://dn3ykrwb0oe1b" path="res://scenes/game_creator.tscn" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://plfqcymt15im" path="res://scripts/level.gd" id="1_w8frs"]
-[ext_resource type="Texture2D" uid="uid://bgaeipdhpak78" path="res://icon.svg" id="3_w8frs"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_w8frs")
@@ -23,25 +22,5 @@ position = Vector2(288, 264)
 scale = Vector2(2, 1)
 color = Color(0.35, 0.305083, 0.2275, 1)
 polygon = PackedVector2Array(-128, 0, 128, 0, 128, 40, -128, 40)
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(128, 256)
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("3_w8frs")
-
-[node name="Sprite2D2" type="Sprite2D" parent="."]
-position = Vector2(128, 128)
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("3_w8frs")
-
-[node name="Sprite2D4" type="Sprite2D" parent="."]
-position = Vector2(128, 64)
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("3_w8frs")
-
-[node name="Sprite2D3" type="Sprite2D" parent="."]
-position = Vector2(128, 192)
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("3_w8frs")
 
 [connection signal="rod_ring_count" from="GameCreator" to="." method="_on_game_creator_rod_ring_count"]
